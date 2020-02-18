@@ -1,6 +1,7 @@
 import requests
 import time
 from bs4 import BeautifulSoup
+import argparse
 
 def monitor_site(version, url, headers):
     check = True
@@ -25,9 +26,27 @@ def monitor_site(version, url, headers):
             print(f"Updated at {current_time} at {current_date}")
             check = False
 
+def process(args):
+    url = ""
+    if(args.app.lower() == "avatar"):
+        url = "https://apps.apple.com/nz/app/avatar-pandora-rising/id1441586918"
+    elif (args.app.lower() == "marvel" or args.app.lower() == "msf"):
+        url = "https://apps.apple.com/nz/app/marvel-strike-force-squad-rpg/id1292952049"
+    
+    if(url != ""):
+        inital_scrape(url)
+    else:
+        print(f"{args.app} is not a FNG app. Suggestion use Avatar or Marvel")
+    
 
 def main():
-    url = "https://apps.apple.com/nz/app/marvel-strike-force-squad-rpg/id1292952049"
+    parser = argparse.ArgumentParser(description="Monitor FNG iOS propagation time")
+    parser.add_argument("app", help="name a FNG app's IP title")
+    args = parser.parse_args()
+
+    process(args)
+
+def inital_scrape(url):
     
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 

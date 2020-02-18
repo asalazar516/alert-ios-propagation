@@ -9,6 +9,7 @@ verify_ssl = true
 requests = "*"
 time = "*"
 beautifulsoup4 = "*"
+argparse = "*"
 
 [requires]
 python_version = "3.7"
