@@ -10,6 +10,7 @@ requests = "*"
 time = "*"
 beautifulsoup4 = "*"
 argparse = "*"
+bs4 = "*"
 
 [requires]
 python_version = "3.7"
