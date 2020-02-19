@@ -24,7 +24,7 @@ def monitor_site(version, url, headers):
         new_version = content['results'][0]['version']
 
         if (new_version == version):
-            print(f"{new_version}")
+            print(f"Current version: {new_version}")
             time.sleep(45)
             continue
         else:
@@ -65,6 +65,8 @@ def inital_scrape(url):
     content = json.loads(response.text)
 
     version = content['results'][0]['version']
+
+    print(f"Inital version number: {version}")
 
     monitor_site(version, url, headers)
 
