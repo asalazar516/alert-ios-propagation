@@ -11,4 +11,4 @@ Monitoring iOS apps to alert when propagation has been updated
 1. run `npm install` and `pipenv install` to fetch the project's dependencies
 
 ## Run script
-1. pipenv run python src/app-store.py <FNG app>
+1. pipenv run python src/app-store.py `FNG app`
