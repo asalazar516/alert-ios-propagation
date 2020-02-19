@@ -1,18 +1,27 @@
 import requests
 import time
-from bs4 import BeautifulSoup
 import argparse
+import json
+import random
+import string
+
+def randomString(strLength = 3):
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(strLength))
 
 def monitor_site(version, url, headers):
     check = True
 
     while check is True:
-        response = requests.get (url, headers)
+        rand_url = url + '&' + randomString()
+        response = requests.get (rand_url, headers)
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        response = requests.get (rand_url, headers)
+        content = {}
 
-        for item in soup.select("p.whats-new__latest__version"):
-            new_version = item.get_text()
+        content = json.loads(response.text)
+
+        new_version = content['results'][0]['version']
 
         if (new_version == version):
             print(f"{new_version}")
@@ -29,9 +38,9 @@ def monitor_site(version, url, headers):
 def process(args):
     url = ""
     if(args.app.lower() == "avatar"):
-        url = "https://apps.apple.com/nz/app/avatar-pandora-rising/id1441586918"
+        url = "https://itunes.apple.com/lookup?id=1441586918&country=NZ"
     elif (args.app.lower() == "marvel" or args.app.lower() == "msf"):
-        url = "https://apps.apple.com/nz/app/marvel-strike-force-squad-rpg/id1292952049"
+        url = "https://itunes.apple.com/lookup?id=1292952049&123&country=NZ"
     
     if(url != ""):
         inital_scrape(url)
@@ -51,11 +60,11 @@ def inital_scrape(url):
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
     response = requests.get (url, headers)
+    content = {}
 
-    soup = BeautifulSoup(response.text, "html.parser")
+    content = json.loads(response.text)
 
-    for item in soup.select("p.whats-new__latest__version"):
-        version = item.get_text()
+    version = content['results'][0]['version']
 
     monitor_site(version, url, headers)
 

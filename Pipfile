@@ -8,9 +8,10 @@ verify_ssl = true
 [packages]
 requests = "*"
 time = "*"
-beautifulsoup4 = "*"
 argparse = "*"
-bs4 = "*"
+json = "*"
+random = "*"
+string = "*"
 
 [requires]
 python_version = "3.7"
