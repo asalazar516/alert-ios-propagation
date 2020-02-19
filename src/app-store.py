@@ -25,14 +25,14 @@ def monitor_site(version, url, headers):
 
         if (new_version == version):
             print(f"Current version: {new_version}")
-            time.sleep(45)
+            time.sleep(30)
             continue
         else:
             t = time.localtime
             current_time = time.strftime("%H:%M:%S", t)
             current_date = time.strftime("%B %d, %Y", t)
             print(f"Version has changed from {version} to {new_version}!")
-            print(f"Updated at {current_time} at {current_date}")
+            print(f"Updated at {current_time} on {current_date}")
             check = False
 
 def process(args):
@@ -40,7 +40,7 @@ def process(args):
     if(args.app.lower() == "avatar"):
         url = "https://itunes.apple.com/lookup?id=1441586918&country=NZ"
     elif (args.app.lower() == "marvel" or args.app.lower() == "msf"):
-        url = "https://itunes.apple.com/lookup?id=1292952049&123&country=NZ"
+        url = "https://itunes.apple.com/lookup?id=1292952049&country=NZ"
     
     if(url != ""):
         inital_scrape(url)
