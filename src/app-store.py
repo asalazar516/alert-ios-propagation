@@ -28,9 +28,9 @@ def monitor_site(version, url, headers):
             time.sleep(30)
             continue
         else:
-            t = time.localtime
+            t = time.localtime()
             current_time = time.strftime("%H:%M:%S", t)
-            current_date = time.strftime("%B %d, %Y", t)
+            current_date = time.strftime("%B %d %Y", t)
             print(f"Version has changed from {version} to {new_version}!")
             print(f"Updated at {current_time} on {current_date}")
             check = False
