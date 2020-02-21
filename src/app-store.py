@@ -37,13 +37,14 @@ def monitor_site(version, url, headers):
 
 def process(args):
     url = ""
+    country = args.country.upper()
     if(args.app.lower() == "avatar"):
-        url = "https://itunes.apple.com/lookup?id=1441586918&country=NZ"
+        url = f"https://itunes.apple.com/lookup?id=1441586918&country={country}"
     elif (args.app.lower() == "marvel" or args.app.lower() == "msf"):
-        url = "https://itunes.apple.com/lookup?id=1292952049&country=NZ"
+        url = f"https://itunes.apple.com/lookup?id=1292952049&country={country}"
     
     if(url != ""):
-        inital_scrape(url)
+        inital_scrape(url, args)
     else:
         print(f"{args.app} is not a FNG app. Suggestion use Avatar or Marvel")
     
@@ -51,11 +52,12 @@ def process(args):
 def main():
     parser = argparse.ArgumentParser(description="Monitor FNG iOS propagation time")
     parser.add_argument("app", help="name a FNG app's IP title")
+    parser.add_argument("country", help="country to check app")
     args = parser.parse_args()
 
     process(args)
 
-def inital_scrape(url):
+def inital_scrape(url, args):
     
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
@@ -64,7 +66,12 @@ def inital_scrape(url):
 
     content = json.loads(response.text)
 
-    version = content['results'][0]['version']
+    try:
+        version = content['results'][0]['version']
+    except:
+        print(f"Application is not supported in {args.country.upper()} territory")
+        exit()
+
 
     print(f"Inital version number: {version}")
 
